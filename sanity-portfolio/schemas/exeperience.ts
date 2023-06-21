@@ -3,13 +3,37 @@ import {defineField, defineType} from 'sanity'
 export default defineType({
   name: 'experience',
   type: 'document',
-  title: 'Experience',
+  title: 'Experiences',
+  preview: {
+    select: {
+      title: 'company',
+      subtitle: 'designation',
+      startDate: 'startDate',
+      endDate: 'endDate',
+      media: 'companyIcon',
+    },
+    prepare(experience, options) {
+      const {title, subtitle, startDate, endDate, media} = experience
+
+      const formatDate = (date: string) => {
+        if (date) {
+          return date.split('-')[0]
+        }
+        return 'present'
+      }
+
+      return {
+        title,
+        subtitle: `${subtitle}( ${formatDate(startDate)} - ${formatDate(endDate)} )`,
+        media,
+      }
+    },
+  },
   fields: [
     defineField({
       name: 'designation',
-      type: 'array',
+      type: 'string',
       title: 'Designation',
-      of: [{type: 'block'}],
     }),
     defineField({
       name: 'company',
