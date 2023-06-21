@@ -1,18 +1,10 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { styles } from '../style';
 import { SectionWrapper } from '../hoc';
 import { fadeIn, textVariant } from '../utils/motion';
-import { testimonials } from '../contants';
-
-const FeedbackCard = ({
-  index,
-  testimonial,
-  name,
-  designation,
-  company,
-  image,
-}) => {
+import { client } from '../../client';
+const FeedbackCard = ({ index, feedback, name, position, company, image }) => {
   return (
     <>
       <motion.div
@@ -21,14 +13,14 @@ const FeedbackCard = ({
       >
         <p className="text-white font-black text-[48px]"></p>
         <div className="mt-1">
-          <p className="text-white text-[18px]">{testimonial}</p>
+          <p className="text-white text-[18px]">{feedback}</p>
           <div className="mt-7 flex justify-between items-center gap-1">
             <div className="flex-1 flex flex-col">
               <p className="text-white font-medium text-[16px]">
                 <span className="blue-text-gradient">@</span> {name}
               </p>
               <p className="mt-1 text-secondary text-[12px]">
-                {designation} of {company}
+                {position} of {company}
               </p>
             </div>
             <img
@@ -44,6 +36,17 @@ const FeedbackCard = ({
 };
 
 const Feedbacks = () => {
+  const [testimonials, setTestimonials] = useState(null);
+  useEffect(() => {
+    async function fetchProjects() {
+      const query = `*[_type == 'testimonial']{ ...,'image': image.asset->url }`;
+      const res = await client.fetch(query);
+
+      setTestimonials(res);
+    }
+
+    if (!testimonials) fetchProjects();
+  });
   return (
     <div className="mt-12 bg-black-100 rounded-[20px]">
       <div
@@ -55,7 +58,7 @@ const Feedbacks = () => {
         </motion.div>
       </div>
       <div className={`${styles.paddingX} mt-20 pb-14 flex flex-wrap gap-7`}>
-        {testimonials.map((testimonial, index) => (
+        {testimonials?.map((testimonial, index) => (
           <FeedbackCard
             key={`testimonial-${index}-${testimonial.name}`}
             index={index}
