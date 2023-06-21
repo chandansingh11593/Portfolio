@@ -3,22 +3,25 @@ import {defineField, defineType} from 'sanity'
 export default defineType({
   name: 'testimonial',
   type: 'document',
-  title: 'Testimonial',
+  title: 'Testimonials',
   fields: [
     defineField({
       name: 'name',
       type: 'string',
       title: 'Name',
+      validation: (rule) => rule.required(),
     }),
     defineField({
       name: 'position',
       type: 'string',
       title: 'Position',
+      validation: (rule) => rule.required(),
     }),
     defineField({
       name: 'company',
       type: 'string',
       title: 'Company',
+      validation: (rule) => rule.required(),
     }),
     defineField({
       name: 'feedback',

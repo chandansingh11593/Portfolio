@@ -1,5 +1,5 @@
 import {defineType} from 'sanity'
-import {transformStringToDropdownOption} from '../utils'
+import {transformStringToDropdownOption} from '../../utils'
 
 export default defineType({
   name: 'tag',
