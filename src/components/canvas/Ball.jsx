@@ -11,14 +11,15 @@ import CanvasLoader from '../Loader';
 
 const Ball = (props) => {
   const [decal] = useTexture([props.imgUrl]);
+
   return (
-    <Float speed={1.75} rotationIntensity={1.5} floatIntensity={2}>
-      <ambientLight intensity={0.25} />
-      <directionalLight position={[0, 0, 0.05]} />
+    <Float speed={1.75} rotationIntensity={1} floatIntensity={2}>
+      <ambientLight intensity={0.35} />
+      <directionalLight position={[0, 0, 0.25]} />
       <mesh castShadow receiveShadow scale={2.75}>
-        <icosahedronBufferGeometry args={[1, 1]} />
+        <icosahedronGeometry args={[1, 1]} position={[0, 0, 1]} />
         <meshStandardMaterial
-          color={'#ff8eb'}
+          color={'#bebebe'}
           polygonOffsetFactor={-5}
           flatShading
         />
@@ -32,18 +33,21 @@ const Ball = (props) => {
   );
 };
 
-const BallCanvas = ({ icon }) => (
-  <Canvas frameloop="demand" gl={{ preserveDrawingBuffer: true }}>
-    <Suspense fallback={<CanvasLoader />}>
-      <OrbitControls
-        enableZoom={false}
-        maxPolarAngle={Math.PI / 2}
-        minPolarAngle={Math.PI / 2}
-      />
-      <Ball imgUrl={icon} />
-    </Suspense>
+const BallCanvas = ({ icon }) =>
+  icon ? (
+    <Canvas frameloop="demand" gl={{ preserveDrawingBuffer: true }}>
+      <Suspense fallback={<CanvasLoader />}>
+        <OrbitControls
+          enableZoom={false}
+          maxPolarAngle={Math.PI / 2}
+          minPolarAngle={Math.PI / 2}
+        />
+        <Ball imgUrl={icon} />
+      </Suspense>
 
-    <Preload all />
-  </Canvas>
-);
+      <Preload all />
+    </Canvas>
+  ) : (
+    <></>
+  );
 export default BallCanvas;

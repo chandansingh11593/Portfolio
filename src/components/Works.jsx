@@ -6,7 +6,7 @@ import { github } from '../assets';
 import { SectionWrapper } from '../hoc';
 import { fadeIn, textVariant } from '../utils/motion';
 import { client } from './../../client';
-import { toPlainText } from '../utils/transform';
+import PortableText from '@sanity/block-content-to-react';
 
 const ProjectCard = ({
   index,
@@ -43,9 +43,10 @@ const ProjectCard = ({
         </div>
         <div className="mt-5">
           <h3 className="text-white font-bold text-[24px]">{name}</h3>
-          <p className="mt-2 text-secondary text-[14px]">
-            {toPlainText(summary)}
-          </p>
+          <PortableText
+            blocks={summary || []}
+            className="mt-2 text-secondary text-[14px]"
+          />
         </div>
         <div className="mt-4 flex flex-wrap gap-2">
           {tags.map((tag, index) => (

@@ -35,7 +35,7 @@ const ExperienceCard = ({ experience }) => (
     </div>
     <PortableText
       className="mt-5 list-disc! ml-5 space-y-2"
-      blocks={experience.responsibilities}
+      blocks={experience.responsibilities || []}
     />
   </VerticalTimelineElement>
 );
@@ -43,13 +43,10 @@ const ExperienceCard = ({ experience }) => (
 const Experience = () => {
   const [experiences, setExperiences] = useState(null);
   useEffect(() => {
-    console.clear('useEffect');
-    console.log('useEffect', experiences);
     async function fetchProjects() {
       const query = `*[_type == 'experience']{ ..., 'icon': companyIcon.asset->url }`;
       const res = await client.fetch(query);
 
-      console.log(res);
       setExperiences(res);
     }
 
@@ -62,12 +59,19 @@ const Experience = () => {
         <p className={styles.sectionSubText}>My Journey so far</p>
         <h2 className={styles.sectionHeadText}>Work Experience.</h2>
       </motion.div>
-      <div className="my-20 flex flex-col">
-        <VerticalTimeline>
-          {experiences?.map((experience, index) => (
-            <ExperienceCard key={index} experience={experience} />
-          ))}
-        </VerticalTimeline>
+      <div className="my-15 flex flex-col">
+        {experiences && experiences.length ? (
+          <VerticalTimeline>
+            {experiences.map((experience) => (
+              <ExperienceCard
+                key={`experience-card-${experience._id}`}
+                experience={experience}
+              />
+            ))}
+          </VerticalTimeline>
+        ) : (
+          'Loading Experiences'
+        )}
       </div>
     </>
   );
