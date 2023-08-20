@@ -99,7 +99,7 @@ const Works = () => {
           <ProjectCard
             key={`project-${index}`}
             {...project}
-            image={project.images[0]}
+            image={project.images?.[0]}
             index={index}
           />
         ))}
