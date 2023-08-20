@@ -44,7 +44,7 @@ const Experience = () => {
   const [experiences, setExperiences] = useState(null);
   useEffect(() => {
     async function fetchProjects() {
-      const query = `*[_type == 'experience']{ ..., 'icon': companyIcon.asset->url }`;
+      const query = `*[_type == 'experience']| order(startDate desc){ ..., 'icon': companyIcon.asset->url }`;
       const res = await client.fetch(query);
 
       setExperiences(res);
