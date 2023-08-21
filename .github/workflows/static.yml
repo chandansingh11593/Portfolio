@@ -52,7 +52,7 @@ jobs:
   deploy-sanity:
     runs-on: ubuntu-latest
     env:
-      root: ./sanity-portfolio
+      ROOT: './sanity-portfolio'
       SANITY_AUTH_TOKEN: ${{ vars.SANITY_AUTH_TOKEN }}
     steps:
       - name: Checkout
@@ -64,13 +64,13 @@ jobs:
           cache: 'npm'
       - name: Install Sanity ClI
         run: npm install @sanity/cli -g
-        working-directory: '$root'
+        working-directory: '$ROOT'
       - name: Install Dependencies
         run: npm install --legacy-peer-deps
-        working-directory: '$root'
+        working-directory: '$ROOT'
       - name: Sanity Build
         run: sanity build
-        working-directory: '$root'
+        working-directory: '$ROOT'
       - name: Sanity Deploy
         run: sanity deploy --no-build
-        working-directory: '$root'
+        working-directory: '$ROOT'
