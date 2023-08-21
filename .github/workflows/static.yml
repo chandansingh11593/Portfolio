@@ -64,13 +64,13 @@ jobs:
           cache: 'npm'
       - name: Install Sanity ClI
         run: npm install @sanity/cli -g
-        working-directory: '$ROOT'
+        working-directory: './sanity-portfolio'
       - name: Install Dependencies
         run: npm install --legacy-peer-deps
-        working-directory: '$ROOT'
+        working-directory: './sanity-portfolio'
       - name: Sanity Build
         run: sanity build
-        working-directory: '$ROOT'
+        working-directory: './sanity-portfolio'
       - name: Sanity Deploy
         run: sanity deploy --no-build
-        working-directory: '$ROOT'
+        working-directory: './sanity-portfolio'
